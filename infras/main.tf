@@ -1,7 +1,11 @@
 terraform {
+  # Assumes s3 bucket and dynamo DB table already set up
+  # See /code/03-basics/aws-backend
   backend "s3" {
-    bucket         = "simlops"
-    region         = "ap-southeast-1"
+    bucket         = "devops-directive-tf-state"
+    key            = "03-basics/web-app/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "terraform-state-locking"
     encrypt        = true
   }
 
@@ -14,19 +18,11 @@ terraform {
 }
 
 provider "aws" {
-  region = "ap-southeast-1"
-}
-
-data "aws_vpc" "default_vpc" {
-  default = true
-}
-
-data "aws_subnet_ids" "default_subnet" {
-  vpc_id = data.aws_vpc.default_vpc.id
+  region = "us-east-1"
 }
 
 resource "aws_instance" "instance_1" {
-  ami             = "ami-0df7a207adb9748c7" 
+  ami             = "ami-011899242bb902164" # Ubuntu 20.04 LTS // us-east-1
   instance_type   = "t2.micro"
   security_groups = [aws_security_group.instances.name]
   user_data       = <<-EOF
@@ -37,7 +33,7 @@ resource "aws_instance" "instance_1" {
 }
 
 resource "aws_instance" "instance_2" {
-  ami             = "ami-0df7a207adb9748c7" 
+  ami             = "ami-011899242bb902164" # Ubuntu 20.04 LTS // us-east-1
   instance_type   = "t2.micro"
   security_groups = [aws_security_group.instances.name]
   user_data       = <<-EOF
@@ -48,7 +44,7 @@ resource "aws_instance" "instance_2" {
 }
 
 resource "aws_s3_bucket" "bucket" {
-  bucket_prefix = "simlops"
+  bucket_prefix = "devops-directive-web-app-data"
   force_destroy = true
 }
 
@@ -66,6 +62,14 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "bucket_crypto_con
       sse_algorithm = "AES256"
     }
   }
+}
+
+data "aws_vpc" "default_vpc" {
+  default = true
+}
+
+data "aws_subnet_ids" "default_subnet" {
+  vpc_id = data.aws_vpc.default_vpc.id
 }
 
 resource "aws_security_group" "instances" {
@@ -183,12 +187,12 @@ resource "aws_lb" "load_balancer" {
 }
 
 resource "aws_route53_zone" "primary" {
-  name = "realmlops.com"
+  name = "devopsdeployed.com"
 }
 
 resource "aws_route53_record" "root" {
   zone_id = aws_route53_zone.primary.zone_id
-  name    = "realmlops.com"
+  name    = "devopsdeployed.com"
   type    = "A"
 
   alias {
@@ -196,4 +200,21 @@ resource "aws_route53_record" "root" {
     zone_id                = aws_lb.load_balancer.zone_id
     evaluate_target_health = true
   }
+}
+
+resource "aws_db_instance" "db_instance" {
+  allocated_storage = 20
+  # This allows any minor version within the major engine_version
+  # defined below, but will also result in allowing AWS to auto
+  # upgrade the minor version of your DB. This may be too risky
+  # in a real production environment.
+  auto_minor_version_upgrade = true
+  storage_type               = "standard"
+  engine                     = "postgres"
+  engine_version             = "12"
+  instance_class             = "db.t2.micro"
+  name                       = "mydb"
+  username                   = "foo"
+  password                   = "foobarbaz"
+  skip_final_snapshot        = true
 }
