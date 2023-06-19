@@ -3,7 +3,7 @@ locals {
   subnet_id        = "subnet-0389f1afa313a370f"
   ssh_user         = "ubuntu"
   key_name         = "devops"
-  private_key_path = "backend/infras/devops.pem"
+  private_key_path = "devops.pem"
 }
 
 provider "aws" {
