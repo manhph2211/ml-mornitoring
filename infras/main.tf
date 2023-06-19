@@ -18,6 +18,14 @@ provider "aws" {
   region = "ap-southeast-1"
 }
 
+data "aws_vpc" "default_vpc" {
+  default = true
+}
+
+data "aws_subnet_ids" "default_subnet" {
+  vpc_id = data.aws_vpc.default_vpc.id
+}
+
 resource "aws_instance" "instance_1" {
   ami             = "ami-0df7a207adb9748c7" 
   instance_type   = "t2.micro"
@@ -59,14 +67,6 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "bucket_crypto_con
       sse_algorithm = "AES256"
     }
   }
-}
-
-data "aws_vpc" "default_vpc" {
-  default = true
-}
-
-data "aws_subnet_ids" "default_subnet" {
-  vpc_id = data.aws_vpc.default_vpc.id
 }
 
 resource "aws_security_group" "instances" {
