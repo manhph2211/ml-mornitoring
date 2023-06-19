@@ -1,7 +1,6 @@
 terraform {
   backend "s3" {
     bucket         = "simlops"
-    key            = "terraform.tfstate"
     region         = "ap-southeast-1"
     encrypt        = true
   }
@@ -9,7 +8,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~>3.0"
+      version = "~> 3.0"
     }
   }
 }
