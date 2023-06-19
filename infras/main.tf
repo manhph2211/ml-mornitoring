@@ -2,8 +2,7 @@ terraform {
   backend "s3" {
     bucket         = "simlops"
     key            = "terraform.tfstate"
-    region         = "ap-southeast-1""
-    dynamodb_table = "terraform-state-locking"
+    region         = "ap-southeast-1"
     encrypt        = true
   }
 
@@ -16,7 +15,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "ap-southeast-1""
+  region = "ap-southeast-1"
 }
 
 resource "aws_instance" "instance_1" {
