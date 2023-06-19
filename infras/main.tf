@@ -3,7 +3,7 @@ terraform {
   # See /code/03-basics/aws-backend
   backend "s3" {
     bucket         = "devops-directive-tf-state"
-    key            = "03-basics/web-app/terraform.tfstate"
+    key            = "terraform.tfstate"
     region         = "us-east-1"
     dynamodb_table = "terraform-state-locking"
     encrypt        = true
