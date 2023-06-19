@@ -1,3 +1,15 @@
+locals {
+  vpc_id           = "vpc-007085122727509c4"
+  subnet_id        = "subnet-0389f1afa313a370f"
+  ssh_user         = "ubuntu"
+  key_name         = "devops"
+  private_key_path = "devops.pem"
+}
+
+provider "aws" {
+  region = "ap-southeast-1"
+}
+
 resource "tls_private_key" "pk" {
   algorithm = "RSA"
   rsa_bits  = 4096
@@ -10,18 +22,6 @@ resource "aws_key_pair" "kp" {
   provisioner "local-exec" { 
     command = "echo '${tls_private_key.pk.private_key_pem}' > ./devops.pem"
   }
-}
-
-locals {
-  vpc_id           = "vpc-007085122727509c4"
-  subnet_id        = "subnet-0389f1afa313a370f"
-  ssh_user         = "ubuntu"
-  key_name         = "devops"
-  private_key_path = "devops.pem"
-}
-
-provider "aws" {
-  region = "ap-southeast-1"
 }
 
 resource "aws_security_group" "nginx" {
