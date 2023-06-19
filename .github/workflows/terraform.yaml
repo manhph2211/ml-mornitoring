@@ -14,7 +14,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     defaults:
       run:
-        working-directory: backend/infras
+        working-directory: infras
     steps:
       - name: Checkout
         uses: actions/checkout@v2
