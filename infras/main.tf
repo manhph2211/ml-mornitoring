@@ -1,13 +1,13 @@
 locals {
-  vpc_id           = "vpc-0548d408bf3549ca0"
-  subnet_id        = "subnet-060a1ae52cf0a73d6"
+  vpc_id           = "vpc-007085122727509c4"
+  subnet_id        = "subnet-0389f1afa313a370f"
   ssh_user         = "ubuntu"
   key_name         = "devops"
   private_key_path = "devops.pem"
 }
 
 provider "aws" {
-  region = "us-east-1"
+  region = "ap-southeast-1"
 }
 
 resource "aws_security_group" "nginx" {
@@ -37,8 +37,8 @@ resource "aws_security_group" "nginx" {
 }
 
 resource "aws_instance" "nginx" {
-  ami                         = "ami-0dba2cb6798deb6d8"
-  subnet_id                   = "subnet-060a1ae52cf0a73d6"
+  ami                         = "ami-0df7a207adb9748c7"
+  subnet_id                   = "subnet-0389f1afa313a370f"
   instance_type               = "t2.micro"
   associate_public_ip_address = true
   security_groups             = [aws_security_group.nginx.id]
