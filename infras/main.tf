@@ -11,7 +11,7 @@ provider "aws" {
 }
 
 resource "aws_security_group" "nginx" {
-  name   = "nginx_access"
+  name   = "nginx_access_2"
   vpc_id = local.vpc_id
 
   ingress {
