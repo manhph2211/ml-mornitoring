@@ -30,6 +30,7 @@ resource "aws_security_group" "nginx" {
   lifecycle {
     create_before_destroy = true
   }
+
   ingress {
     from_port   = 22
     to_port     = 22
@@ -84,7 +85,6 @@ resource "aws_instance" "nginx" {
   instance_type               = "t2.micro"
   associate_public_ip_address = true
   security_groups             = [aws_security_group.nginx.id]
-  # key_name                    = local.key_name
   key_name                    = aws_key_pair.key_pair.key_name
 
   provisioner "remote-exec" {
@@ -92,10 +92,11 @@ resource "aws_instance" "nginx" {
     connection {
       type        = "ssh"
       user        = local.ssh_user
-      private_key = tls_private_key.key.private_key_pem # file(local.private_key_path)
+      private_key = tls_private_key.key.private_key_pem 
       host        = aws_instance.nginx.public_ip
     }
   }
+  
   provisioner "local-exec" {
     command = "ansible-playbook  -i ${aws_instance.nginx.public_ip}, --key-file ansible.pem nginx.yaml"
   }
