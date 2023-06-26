@@ -1,12 +1,25 @@
+variable "AWS_ACCESS_KEY_ID" {
+  type = string
+}
+
+variable "AWS_SECRET_ACCESS_KEY" {
+  type = string
+}
+
 locals {
   vpc_id           = "vpc-007085122727509c4"
   subnet_id        = "subnet-0389f1afa313a370f"
   ssh_user         = "ubuntu"
   ami              = "ami-0df7a207adb9748c7"
+  region           = "ap-southeast-1"
+  access_key       = var.AWS_ACCESS_KEY_ID
+  secret_key       = var.AWS_SECRET_ACCESS_KEY
 }
 
 provider "aws" {
-  region = "ap-southeast-1"
+  region = local.region
+  access_key = local.access_key
+  secret_key = local.secret_key
 }
 
 resource "tls_private_key" "key" {
