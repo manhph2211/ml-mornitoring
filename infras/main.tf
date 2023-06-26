@@ -2,6 +2,7 @@ locals {
   vpc_id           = "vpc-007085122727509c4"
   subnet_id        = "subnet-0389f1afa313a370f"
   ssh_user         = "ubuntu"
+  ami              = "ami-0df7a207adb9748c7"
 }
 
 provider "aws" {
@@ -30,7 +31,6 @@ resource "aws_security_group" "nginx" {
   lifecycle {
     create_before_destroy = true
   }
-
   ingress {
     from_port   = 22
     to_port     = 22
@@ -80,8 +80,8 @@ resource "aws_security_group" "nginx" {
 }
 
 resource "aws_instance" "nginx" {
-  ami                         = "ami-0df7a207adb9748c7"
-  subnet_id                   = "subnet-0389f1afa313a370f"
+  ami                         = local.ami
+  subnet_id                   = local.subnet_id
   instance_type               = "t2.micro"
   associate_public_ip_address = true
   security_groups             = [aws_security_group.nginx.id]
