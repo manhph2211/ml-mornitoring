@@ -27,7 +27,6 @@ resource "aws_key_pair" "key_pair" {
 resource "aws_security_group" "nginx" {
   name   = "nginxx"
   vpc_id = local.vpc_id
-
   lifecycle {
     create_before_destroy = true
   }
@@ -43,28 +42,24 @@ resource "aws_security_group" "nginx" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
   ingress {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
   ingress {
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
   ingress {
     from_port   = 9090
     to_port     = 9090
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
   ingress {
     from_port   = 3000
     to_port     = 3000
