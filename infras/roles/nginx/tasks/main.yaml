@@ -7,3 +7,17 @@
   systemd:
     state: started
     name: nginx
+- name: "Copy scipt to the remote hosts"
+  copy: src= basic_nginx_metrics.sh dest=/root/ mode=0755
+- name: Add status metrics nginx 
+  command: sh basic_nginx_metrics.sh
+  register: script_result
+- name: Add prothemeus
+  command: sh prometheus.sh
+  register: script_result
+- name: Add grafana
+  command: sh grafana.sh
+  register: script_result
+- name: Print script output
+  debug:
+    var: script_result.stdout"

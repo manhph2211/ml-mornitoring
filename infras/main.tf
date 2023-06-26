@@ -3,7 +3,7 @@ locals {
   subnet_id        = "subnet-0389f1afa313a370f"
   ssh_user         = "ubuntu"
   key_name         = "devops"
-  private_key_path = "devops.pem"
+  private_key_path = "~/Downloads/devops.pem"
 }
 
 provider "aws" {
@@ -11,8 +11,12 @@ provider "aws" {
 }
 
 resource "aws_security_group" "nginx" {
-  name   = "nginx_access1"
+  name   = "nginx_access_"
   vpc_id = local.vpc_id
+
+  lifecycle {
+    create_before_destroy = true
+  }
 
   ingress {
     from_port   = 22
