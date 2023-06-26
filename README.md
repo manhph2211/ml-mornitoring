@@ -1,3 +1,4 @@
-# Terraform Ansible Integration | Terraform Ansible AWS Example?
+General Mornitoring Infrastructure
+====
 
-[Step by Step Tutorial](https://youtu.be/QxgJlJgGA0E)
+This is a set of terraform and ansible scripts to create monitoring stardard pipeline.

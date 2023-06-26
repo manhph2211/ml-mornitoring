@@ -1,7 +1,8 @@
 # custom 
-backend/infras/.ter*
-backend/infras/ter*
-backend/infras/*.pem
+terr*
+infras/.ter*
+infras/ter*
+infras/*.pem
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
