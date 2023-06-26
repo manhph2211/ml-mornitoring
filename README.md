@@ -9,11 +9,10 @@ This is a set of scripts to create stardard monitoring pipeline. Some key points
 
 ## How it works?
 
-To run this, make sure you have installed terraform and ansible then follow simple format:
+To run this, make sure you have installed terraform, ansible, and created an AWS account (to get `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`) then follow simple format:
 
 ```
 cd infras/
 terraform init 
-terraform plan
-terraform apply
+terraform apply # enter `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
 ```
