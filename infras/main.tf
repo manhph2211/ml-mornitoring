@@ -22,6 +22,7 @@ resource "aws_key_pair" "key_pair" {
   key_name   = "ansible"
   public_key = tls_private_key.key.public_key_openssh
 }
+
 resource "aws_security_group" "nginx" {
   name   = "nginxx"
   vpc_id = local.vpc_id
@@ -86,10 +87,8 @@ resource "aws_instance" "nginx" {
   # key_name                    = local.key_name
   key_name                    = aws_key_pair.key_pair.key_name
 
-
   provisioner "remote-exec" {
     inline = ["echo 'Wait until SSH is ready'"]
-
     connection {
       type        = "ssh"
       user        = local.ssh_user
