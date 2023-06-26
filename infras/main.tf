@@ -3,7 +3,7 @@ locals {
   subnet_id        = "subnet-0389f1afa313a370f"
   ssh_user         = "ubuntu"
   key_name         = "devops"
-  private_key_path = "~/Downloads/devops.pem"
+  private_key_path = "devops.pem"
 }
 
 provider "aws" {
@@ -11,23 +11,49 @@ provider "aws" {
 }
 
 resource "aws_security_group" "nginx" {
-  name   = "nginx_access_"
+  name   = "nginx_acc"
   vpc_id = local.vpc_id
 
   lifecycle {
     create_before_destroy = true
   }
-
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
   ingress {
     from_port   = 80
     to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 9090
+    to_port     = 9090
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 3000
+    to_port     = 3000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }

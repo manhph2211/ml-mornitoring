@@ -8,9 +8,15 @@
     state: started
     name: nginx
 - name: "Copy scipt to the remote hosts"
-  copy: src= basic_nginx_metrics.sh dest=/root/ mode=0755
+  copy: 
+    src: ../../../mornitors/
+    dest: /home/ubuntu
+    mode: "0755"
 - name: Add status metrics nginx 
   command: sh basic_nginx_metrics.sh
+  register: script_result
+- name: Add nginx_prothemeus exporter 
+  command: sh install_nginx_prometheus_exporter.sh
   register: script_result
 - name: Add prothemeus
   command: sh prometheus.sh
@@ -20,4 +26,4 @@
   register: script_result
 - name: Print script output
   debug:
-    var: script_result.stdout"
+    var: script_result.stdout
