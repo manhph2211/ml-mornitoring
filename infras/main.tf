@@ -2,16 +2,28 @@ locals {
   vpc_id           = "vpc-007085122727509c4"
   subnet_id        = "subnet-0389f1afa313a370f"
   ssh_user         = "ubuntu"
-  key_name         = "devops"
-  private_key_path = "~/Download/devops.pem"
 }
 
 provider "aws" {
   region = "ap-southeast-1"
 }
 
+resource "tls_private_key" "key" {
+  algorithm = "RSA"
+}
+
+resource "local_sensitive_file" "private_key" {
+  filename        = "${path.module}/ansible.pem"
+  content         = tls_private_key.key.private_key_pem
+  file_permission = "0400"
+}
+
+resource "aws_key_pair" "key_pair" {
+  key_name   = "ansible"
+  public_key = tls_private_key.key.public_key_openssh
+}
 resource "aws_security_group" "nginx" {
-  name   = "nginx_acc"
+  name   = "nginxx"
   vpc_id = local.vpc_id
 
   lifecycle {
@@ -57,7 +69,6 @@ resource "aws_security_group" "nginx" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
   egress {
     from_port   = 0
     to_port     = 0
@@ -72,7 +83,9 @@ resource "aws_instance" "nginx" {
   instance_type               = "t2.micro"
   associate_public_ip_address = true
   security_groups             = [aws_security_group.nginx.id]
-  key_name                    = local.key_name
+  # key_name                    = local.key_name
+  key_name                    = aws_key_pair.key_pair.key_name
+
 
   provisioner "remote-exec" {
     inline = ["echo 'Wait until SSH is ready'"]
@@ -80,12 +93,12 @@ resource "aws_instance" "nginx" {
     connection {
       type        = "ssh"
       user        = local.ssh_user
-      private_key = file(local.private_key_path)
+      private_key = tls_private_key.key.private_key_pem # file(local.private_key_path)
       host        = aws_instance.nginx.public_ip
     }
   }
   provisioner "local-exec" {
-    command = "ansible-playbook  -i ${aws_instance.nginx.public_ip}, --private-key ${local.private_key_path} nginx.yaml"
+    command = "ansible-playbook  -i ${aws_instance.nginx.public_ip}, --key-file ansible.pem nginx.yaml"
   }
 }
 
