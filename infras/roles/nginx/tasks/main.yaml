@@ -9,7 +9,7 @@
     name: nginx
 - name: "Copy scipt to the remote hosts"
   copy: 
-    src: ../../../mornitors/
+    src: ../../../monitors/
     dest: /home/ubuntu
     mode: "0755"
 - name: Add status metrics nginx 
