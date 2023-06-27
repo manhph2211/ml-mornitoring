@@ -1,6 +1,7 @@
 # custom 
 Dockerfile
 terr*
+infras/run.sh
 infras/.ter*
 infras/ter*
 infras/*.pem
