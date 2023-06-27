@@ -23,6 +23,10 @@ terraform init
 terraform apply # also need to enter `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
 ```
 
-In this repo, I did not focus on building apis, so after all, you should access to the ec2 and create ones then use the nginx as the reverse proxy. Monitoring nginx in this situation is more interesting. 
+In this repo, I did not focus on building APIs, so after all, you should access the EC2 and create ones then use the nginx as the reverse proxy. Monitoring nginx in this situation is more interesting. Below is just some simple metrics from nginx, you can customise some more useful metrics by importing specific JSON file to Grafana dashboard. 
+
+![image](https://github.com/manhph2211/SiMlops/assets/61444616/e8b72842-1e3c-4896-b130-4645c5a7f80d)
+
+Okay, see you in the next template of mine 😄
 
 
