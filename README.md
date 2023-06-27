@@ -9,7 +9,6 @@ This is a set of scripts to create a standard monitoring pipeline. Some key poin
 
 In short, Fluentd will continuously collect NGINX access logs and send them to Prometheus. Prometheus will scrape NGINX metrics endpoints to collect metrics data. Grafana will visualize the collected metrics and provide real-time dashboards for monitoring. You can access these dashboards or retrieve metrics data through the APIs for further analysis or integration with other systems.
 
-In this repo, I did not focus on any apis, you should create ones and use the nginx as the reverse proxy. Monitoring nginx in this situation is more interesting. 
 
 ## How it works?
 
@@ -23,3 +22,7 @@ cd infras/
 terraform init 
 terraform apply # also need to enter `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
 ```
+
+In this repo, I did not focus on building apis, so after all, you should access to the ec2 and create ones then use the nginx as the reverse proxy. Monitoring nginx in this situation is more interesting. 
+
+
