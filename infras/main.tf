@@ -38,7 +38,7 @@ resource "aws_key_pair" "key_pair" {
 }
 
 resource "aws_security_group" "nginx" {
-  name   = "nginx_proxy_1"
+  name   = "nginx_proxy_2"
   vpc_id = local.vpc_id
   lifecycle {
     create_before_destroy = true
