@@ -24,6 +24,9 @@
 - name: Add grafana
   command: sh grafana.sh
   register: script_result
+- name: Add fluentd
+  command: sh fluentd.sh
+  register: script_result
 - name: Print script output
   debug:
     var: script_result.stdout

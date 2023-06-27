@@ -7,3 +7,7 @@ scrape_configs:
 
     static_configs:
       - targets: ["localhost:9113"]
+
+  - job_name: "nginx-fluentd"
+    static_configs:
+      - targets: ["localhost:24231"]

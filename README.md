@@ -7,6 +7,10 @@ This is a set of scripts to create a standard monitoring pipeline. Some key poin
 - Terraform and Ansible for creating and building infrastructure (keypair, security group, ec2, nginx, ...)
 - Monitor nginx status & statistics with Prometheus and Grafana 
 
+In short, Fluentd will continuously collect NGINX access logs and send them to Prometheus. Prometheus will scrape NGINX metrics endpoints to collect metrics data. Grafana will visualize the collected metrics and provide real-time dashboards for monitoring. You can access these dashboards or retrieve metrics data through the APIs for further analysis or integration with other systems.
+
+In this repo, I did not focus on any apis, you should create ones and use the nginx as the reverse proxy. Monitoring nginx in this situation is more interesting. 
+
 ## How it works?
 
 To run this, you first need to create an AWS account and then get the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`. In order to activate GitHub Actions (if you want), you also need to add these above keys to the repo:
