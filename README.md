@@ -16,7 +16,7 @@ To run this, you first need to create an AWS account and then get the `AWS_ACCES
 
 ![image](https://github.com/manhph2211/SiMlops/assets/61444616/540b91af-d8e7-482b-8cd0-bc9e1807f386)
 
-By the way, make sure you have installed Terraform, and Ansible, then follow the below simple format:
+By the way, make sure you have installed Terraform, and Ansible, then just follow the below simple format:
 
 ```
 cd infras/
@@ -24,10 +24,10 @@ terraform init
 terraform apply # also need to enter `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
 ```
 
-In this repo, I did not focus on building APIs, so after all, you should access the EC2 and create ones then use the nginx as the reverse proxy. Monitoring nginx in this situation is more interesting. Below is just some simple metrics from nginx, you can customise some more useful metrics by importing specific JSON file to Grafana dashboard. 
+Now you can see the public IP address of EC2 from the terraform output. Use it to access Nginx(port 8080), Prometheus(port 9090), Grafana(port 3000). Below is just some simple metrics from nginx, you can customize some more useful metrics by importing specific JSON file to Grafana dashboard. 
 
 ![image](https://github.com/manhph2211/SiMlops/assets/61444616/38a7acad-72be-4dd2-9024-a2879a289a88)
 
-Okay, see you in the next template of mine 😄
+In this repo, I did not focus on building APIs, so after all, you should access the EC2 and create ones then use the nginx as the reverse proxy. Monitoring nginx in this situation is more interesting. Okay, see you in the next template of mine 😄
 
 
