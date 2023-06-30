@@ -4,7 +4,7 @@ General Monitoring Infrastructure
 This template is a set of scripts to create a standard monitoring pipeline. Some key points in this repo:
 
 - GitHub Actions for automating CI/CD pipeline
-- Terraform and Ansible for creating and building infrastructure (keypair, security group, ec2, nginx, ...)
+- Terraform and Ansible for creating and building infrastructure (keypair, security group, ec2, nginx, Prometheus and Grafana, ...)
 - Monitor nginx status & statistics with Prometheus and Grafana 
 
 In short, Fluentd will continuously collect NGINX access logs and send them to Prometheus. Prometheus will scrape NGINX metrics endpoints to collect metrics data. Grafana will visualize the collected metrics and provide real-time dashboards for monitoring. You can access these dashboards or retrieve metrics data through the APIs for further analysis or integration with other systems.
